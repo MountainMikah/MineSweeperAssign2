@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
-import { useState } from 'react';
-import { Mines } from './components/MyMines';
+import { useState, useEffect } from 'react';
+import { Mines, PassScore } from './components/MyMines';
 
 export default function App() {
+
 
     const showAlert = () => {
         Alert.alert("INSTRUCTIONS:",
@@ -15,14 +16,13 @@ export default function App() {
         )
     }
     const [mineOrSafe, setMines] = useState([true, false, false]);
-
     const Shuffle = () => {
         let newMines = [false, false, false];
         newMines[Math.floor(Math.random() * 8)] = true;
+        newMines[Math.floor(Math.random() * 8)] = true;
         setMines(newMines);
     }
-
-
+    const scoreNumber = 0;
     return (
       <View style={styles.container}>
             <Button title='Instructions/How To Play' onPress={showAlert} />
@@ -36,9 +36,8 @@ export default function App() {
                 <Mines id={6} tOrf={mineOrSafe[5]} />
                 <Mines id={7} tOrf={mineOrSafe[6]} />
                 <Mines id={8} tOrf={mineOrSafe[7]} />
-          </View>
-
-
+            </View>
+            <Text style={{ fontSize: 24 }}>Score = {scoreNumber}</Text>
       <StatusBar style="auto" />
     </View>
   );

@@ -5,39 +5,31 @@ File: MyMines.js
 Brief: The Components that will be used in the main app
 */
 
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, Alert, Text } from 'react-native';
 import { useState } from 'react';
 
-export const Mines = ({ id, tOrf }) => {
-
+export const Mines = ({ id, tOrf, }) => {
     const [btnStyle, changebtnStyle] = useState(styles.demoButton);
+    const [theScore, setScore] = useState(0);
 
 
-    /*
-    Pseudo-code:
-    if (Button isPressed) {
-        if (mine == true ) {
-            setStyle = Exploded/GameOver
-        } else {
-            setStyle = SafeSpot
-        }
-    } else {
-        setStyle = buttonNotPressed
-    }
-    */
+
     const handlebtnStyle = (id, tOrf) => {
         if (tOrf == true) {
             changebtnStyle(styles.bomb)
+            Alert.alert("BBOOOOMMM!!!! GAME OVER, You clicked on a mine.");
         }
         else {
             changebtnStyle(styles.safeSpot)
+            setScore(+100)
         }
+
     }
 
-    return (
 
+    return (
         <Pressable
-            onPressOut= {()=> handlebtnStyle(id, tOrf)}
+            onPress = {()=> handlebtnStyle(id, tOrf)}
             style={[styles.demoButton, btnStyle]}
         />
     )
