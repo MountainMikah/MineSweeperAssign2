@@ -11,8 +11,10 @@ import { useState, useEffect } from 'react';
 export const Mines = ({ id, tOrf, adjustScore }) => {
     const [btnStyle, changebtnStyle] = useState(styles.demoButton);
     const [scoreNumber, updateScore] = useState(0);
-    const [trackNum, setTrackNum] = useState(0);
-    const changeScore = (adjustScore) => {
+    const [trackNum, setTrackNum] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
+
+    const changeScore = (adjustScore, id) => {
         if (btnStyle == styles.safeSpot) {
             const changingScore = scoreNumber + 100;
             updateScore(changingScore);
@@ -26,8 +28,12 @@ export const Mines = ({ id, tOrf, adjustScore }) => {
         if (btnStyle == styles.demoButton) {
             echo = "long hold to reset"
         }
-        adjustScore(scoreNumber);
+        const holder = [...trackNum,scoreNumber];
+        setTrackNum(holder)
+        adjustScore(trackNum, id);
     }
+
+
     const handlebtnStyle = (id, tOrf, adjustScore) => {
         if (tOrf == true) {
             changebtnStyle(styles.bomb)
@@ -38,8 +44,10 @@ export const Mines = ({ id, tOrf, adjustScore }) => {
             changebtnStyle(styles.safeSpot)
             
         }
-        changeScore(adjustScore);
+        changeScore(adjustScore, id);
     }
+
+
     const startOver = () => {
         changebtnStyle(styles.demoButton)
     }
