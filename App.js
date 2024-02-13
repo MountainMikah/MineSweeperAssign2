@@ -1,15 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect } from 'react';
-import { Mines, PassScore } from './components/MyMines';
+import { Mines } from './components/MyMines';
 
 export default function App() {
     const [leaderboard, setLeaderboard] = useState([0, 0, 0, 0]);
     const [scoreNumber, updateScore] = useState(0);
 
     const updateFromComponent = (newScore) => {
+        const makeTheScore = newScore;
         updateScore(newScore);
+        updateScore(makeTheScore);
     };
+
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        console.log("Mount or update message broadcasted. Counter =" + count);
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCount(c => c + 1 );
+        }, 1000);
+
+    }, []);
+
+
+
 
     const showAlert = () => {
         Alert.alert("INSTRUCTIONS:",
@@ -29,12 +46,14 @@ export default function App() {
         newMines[Math.floor(Math.random() * 12)] = true;
         setMines(newMines);
     }
-
+    
     const makeLeaderboard = () => {
         setLeaderboard[3] = leaderboard[2];
         setLeaderboard[2] = leaderboard[1];
         setLeaderboard[1] = leaderboard[0];
         setLeaderboard[0] = scoreNumber;
+        Alert.alert("Most Recent Scores \n "
+            +"One: "+ leaderboard[0] + "\n Two: " +leaderboard[1] + "\n Three: " + leaderboard[2] + "\n Four: " + leaderboard[3]);
     }
 
     return (
@@ -58,6 +77,7 @@ export default function App() {
             </View>
             <Button title='Give up/Finished' onPress={makeLeaderboard}/>
             <Text style={{ fontSize: 24 }}>Score = {scoreNumber}</Text>
+            <Text style={{ fontSize: 24 }}>Timer: {count} </Text>
       <StatusBar style="auto" />
     </View>
   );

@@ -11,14 +11,16 @@ import { useState, useEffect } from 'react';
 export const Mines = ({ id, tOrf, adjustScore }) => {
     const [btnStyle, changebtnStyle] = useState(styles.demoButton);
     const [scoreNumber, updateScore] = useState(0);
-
+    const [trackNum, setTrackNum] = useState(0);
     const changeScore = (adjustScore) => {
         if (btnStyle == styles.safeSpot) {
-            updateScore(s=>s+100);
+            const changingScore = scoreNumber + 100;
+            updateScore(changingScore);
             console.log("sending safe");
         }
         if (btnStyle == styles.bomb) {
-            updateScore(0);
+            const bombScore = 0
+            updateScore(bombScore);
             console.log("sending bomb");
         }
         if (btnStyle == styles.demoButton) {
